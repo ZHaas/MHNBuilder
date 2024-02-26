@@ -1,7 +1,11 @@
 <script>
 	import { weapons } from '$lib/weapons';
+	import { weaponCard } from '../components';
+	import { swordAndShieldValues } from '$lib/weaponValues/swordAndShieldValues';
+	import WeaponCard from '../components/weaponCard.svelte';
 	let weapon = '';
-	console.log('what is weapon', weapon);
+	let weaponType = {};
+	console.log('what is weapon', weaponType);
 </script>
 
 <div
@@ -22,16 +26,28 @@
 		{/each}
 	</select>
 	<p class={'text-2xl font-bold text-white'}>
-		You selected: {weapon} More code being written check back soon
+		You selected: {weapon}
 	</p>
-	<!-- {#if weapon}
-		<a
-			href={`https://monsterhunternow.com/kit-builder?weapon=${weapon}`}
-			class={'m-5 p-5 rounded-xl bg-[#E5D7B7] text-2xl font-bold'}
-		>
-			Build Your Kit
-		</a>
-	{/if} -->
+	{#if weapon}
+		<div class={'m-5 p-5 rounded-xl bg-[#E5D7B7] text-2xl font-bold'}>
+			<option value={''}>Select A Weapon Type</option>
+			{#each swordAndShieldValues as swordAndShieldValue}
+				{#if weapon === 'Sword and Shield'}
+					<WeaponCard
+						class={'m-5 p-5 rounded-xl bg-[#E5D7B7] border-4 border-[#3B2E25]'}
+						weapon={swordAndShieldValue}
+						on:click={() => {
+							weaponType = swordAndShieldValue.name;
+						}}
+					/>
+					<!-- <option value={swordAndShieldValue.name}>{swordAndShieldValue.name}</option> -->
+				{/if}
+			{/each}
+		</div>
+		<p class={'text-2xl font-bold text-white'}>
+			You selected: {weaponType}
+		</p>
+	{/if}
 </div>
 
 <h1 class={'flex font-bold'}>Welcome to SvelteKit! For real!.</h1>
